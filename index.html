@@ -7,7 +7,9 @@
     <title>API Call To Lambda</title>
 </head>
 <body>
-    <button onclick="callApi()">Call API</button>
+    <h3>Latest server date and time every 10 seconds...</h3>
+    <div id="serverdata">
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.js" integrity="sha256-bd8XIKzrtyJ1O5Sh3Xp3GiuMIzWC42ZekvrMMD4GxRg=" crossorigin="anonymous"></script>
     <script>
         function callApi() {
@@ -15,8 +17,17 @@
             // axios.get('http://localhost:3000')
             .then(resp => {
                 console.log(resp);
+                var newElement = document.createElement('div');
+                newElement.innerHTML = "<br/>Date : " + resp.data.date.year + "/" + resp.data.date.month + "/" + resp.data.date.date +"<br/> Time : " + resp.data.time.hours + ":" + resp.data.time.minutes + ":" + resp.data.time.seconds + "<br/>";
+                document.getElementById('serverdata').appendChild(newElement);
             });
         }
+    </script>
+    <script>
+        callApi();
+        setInterval(function() {
+            callApi();
+        }, 3000);
     </script>
 </body>
 </html>
